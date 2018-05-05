@@ -22,6 +22,7 @@ package com.bugfuzz.android.projectwalrus.card.carddata;
 import android.content.Context;
 
 import com.bugfuzz.android.projectwalrus.R;
+import com.bugfuzz.android.projectwalrus.WalrusApplication;
 import com.bugfuzz.android.projectwalrus.card.carddata.binaryformat.BinaryFormat;
 import com.bugfuzz.android.projectwalrus.card.carddata.binaryformat.elements.FixedElement;
 import com.bugfuzz.android.projectwalrus.card.carddata.binaryformat.elements.OpaqueElement;
@@ -53,13 +54,22 @@ public class HIDCardData extends CardData implements ComponentSourceAndSink {
 
     public BigInteger data;
     public int dataBinaryFormatId;
+    public boolean dataBinaryFormatAutodetected;
 
     public HIDCardData() {
         data = BigInteger.ZERO;
     }
 
     public HIDCardData(BigInteger data) {
-        this(data, 0);
+        this.data = data;
+
+        for (int i = FORMATS.length - 1; i > 0; --i) {
+            if (FORMATS[i].getProblems(data).isEmpty()) {
+                dataBinaryFormatId = i;
+                dataBinaryFormatAutodetected = true;
+                break;
+            }
+        }
     }
 
     public HIDCardData(BigInteger data, int dataBinaryFormatId) {
