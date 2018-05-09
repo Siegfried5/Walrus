@@ -39,10 +39,6 @@ import java.util.TreeSet;
 
 @SuppressWarnings({"WeakerAccess", "checkstyle:abbreviationaswordinname"})
 @Parcel
-@CardData.Metadata(
-        name = "ISO 14443A",
-        icon = R.drawable.drawable_mifare
-)
 public class ISO14443ACardData extends CardData {
 
     private static final TypeMatcher[] TYPE_MATCHERS;
